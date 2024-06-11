@@ -1,0 +1,94 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "palette": {
+        "base":"#11111b",
+        "surface": "#585b70",
+        "overlay": "#9399b2",
+        "text": "#cdd6f4",
+        "green": "#a6e3a1",
+        "blue":"#89b4fa",
+        "red":"#f38ba8",
+        "mauve": "#cba6f7",
+        "rosewater": "#f5e0dc",
+        "peach": "#fab387"
+
+  },
+  "blocks": [
+    {
+      "segments": [
+        {
+          "foreground": "p:text",
+          "template": " {{ .CurrentDate | date .Format }} ",
+          "properties": {
+            "time_format": "15:04:05"
+          },
+          "style": "plain",
+          "type": "time"
+        }
+      ],
+      "type": "prompt",
+      "alignment": "right"
+    },
+    {
+      "alignment": "left",
+      "newline": false,
+      "segments": [
+        {
+          "background": "p:base",
+          "foreground": "p:text",
+          "template": " {{ .UserName }} ",
+          "style": "accordion",
+          "powerline_symbol": "",
+          "type": "session"
+        },
+        {
+          "background": "p:surface",
+          "foreground": "p:text",
+          "powerline_symbol": "",
+          "template": " {{ .Path }} ",
+          "style": "powerline",
+          "type": "path",
+          "properties": {
+            "style":"agnoster",
+            "folder_icon": "\uea83",
+            "folder_separator_icon": " \ue0b1 ",
+            "home_icon": "\uf46d",
+            "mapped_locations": {
+              "~\\workspace":"\uf44f",
+              "~\\.config": "\uf423"
+            }
+          }
+        },
+        {
+          "background": "p:overlay",
+          "background_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}p:green{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:peach{{ end }}",
+            "{{ if gt .Ahead 0 }}p:mauve{{ end }}",
+            "{{ if gt .Behind 0 }}p:rosewater{{ end }}"
+          ],
+          "foreground": "p:base",
+          "foreground_templates": [
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#ffffff{{ end }}"
+          ],
+          "powerline_symbol": "",
+          "template": " {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }} ",
+          "properties": {
+            "branch_max_length": 25,
+            "fetch_status": true
+          },
+          "style": "powerline",
+          "type": "git"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "transient_prompt": {
+    "background": "transparent",
+    "foreground": "#ffffff",
+    "template": "\ue691 > "
+  },
+  "final_space": true,
+  "version": 2
+}
